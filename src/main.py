@@ -1,18 +1,4 @@
-def command(a):
-    b = a.split()
-    if len(b) == 0:
-        return "Введите команду"
-    elif b[0] == "cd":
-        return b
-    elif b[0] == "ls":
-        return b
-    elif a == "exit":
-        exit()
-    else:
-        return "Неизвестная команда"
+import pr1
 
-
-if __name__ == "__main__":
-    while True:
-        a = input("VFS % ")
-        print(f"VFS $ {command(a)}")
+pr1.command = input("VFS $ ")
+print(f"VFS $ {pr1.command}")
