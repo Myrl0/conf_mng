@@ -1,4 +1,5 @@
 import pr1
 
-pr1.command = input("VFS $ ")
-print(f"VFS $ {pr1.command}")
+a = input("VFS $ ")
+result = pr1.command(a)
+print(f"VFS $ {result}")

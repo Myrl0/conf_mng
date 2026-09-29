@@ -11,7 +11,6 @@ def command(a):
     else:
         return "Неизвестная команда"
 
-
 if __name__ == "__main__":
     while True:
         a = input("VFS % ")
