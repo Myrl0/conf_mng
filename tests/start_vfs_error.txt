@@ -1,0 +1,4 @@
+ls
+cd no_such_dir
+ls
+exit

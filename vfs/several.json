@@ -1,0 +1,15 @@
+{
+  "name": "root",
+  "type": "dir",
+  "children": {
+    "readme.txt": { "type": "file", "content": "Добро пожаловать в VFS.\nЭто тестовый файл." },
+    "docs": {
+      "type": "dir",
+      "children": {
+        "guide.txt": { "type": "file", "content": "Содержимое руководства." },
+        "binary.dat": { "type": "file", "encoding": "base64", "content": "SGVsbG8gYmluYXJ5IQ==" }
+      }
+    },
+    "empty": { "type": "dir", "children": {} }
+  }
+}

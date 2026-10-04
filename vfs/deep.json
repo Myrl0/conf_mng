@@ -1,0 +1,22 @@
+{
+  "name": "root",
+  "type": "dir",
+  "children": {
+    "level1": {
+      "type": "dir",
+      "children": {
+        "level2": {
+          "type": "dir",
+          "children": {
+            "level3": {
+              "type": "dir",
+              "children": {
+                "deep.txt": { "type": "file", "content": "Ты дошёл до глубокого файла!" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

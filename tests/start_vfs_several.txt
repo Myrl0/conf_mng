@@ -1,0 +1,9 @@
+pwd
+ls
+cd docs
+ls
+cd ..
+cd empty
+ls
+cd ..
+exit
