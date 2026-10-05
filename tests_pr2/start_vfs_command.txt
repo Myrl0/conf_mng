@@ -1,0 +1,36 @@
+# ls в текущем каталоге
+ls
+# ls с указанием пути (несколько аргументов)
+ls docs empty
+# ls на конкретном файле
+ls readme.txt
+
+# cd: относительный, абсолютный, .., корень
+pwd
+cd docs
+pwd
+cd ..
+cd /docs
+pwd
+cd ../empty
+pwd
+cd /
+pwd
+
+# echo
+echo Привет, VFS!
+echo несколько    слов   через пробелы
+
+# cat: один файл, несколько файлов
+cat readme.txt
+cat docs/guide.txt
+cat readme.txt docs/guide.txt
+# бинарный файл через base64 (декодируется в текст)
+cat docs/binary.dat
+
+# tail: по умолчанию (последние 10) и с -n
+tail readme.txt
+tail -n 1 readme.txt
+tail -n 2 readme.txt
+
+exit

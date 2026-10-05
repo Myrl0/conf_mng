@@ -76,24 +76,79 @@ class VFS:
         return "/" + "/".join(reversed(parts)) if parts else "/"
 
     def cmd_ls(self, args):
-        target = self.current if not args else self._resolve(args[0])
-        if target["type"] == "dir":
-            names = sorted(target["children"].keys())
-            return "\n".join(names) if names else ""
-        return target["name"]
+        """ls [путь ...] — вывод содержимого каталога."""
+        if not args:
+            targets = [self.current]
+        else:
+            targets = [self._resolve(a) for a in args]
+
+        out_lines = []
+        multi = len(targets) > 1
+        for i, node in enumerate(targets):
+            if multi:
+                if i > 0:
+                    out_lines.append("")
+                out_lines.append(f"{args[i]}:" if args else f"{node['name']}:")
+            if node["type"] == "dir":
+                names = sorted(node["children"].keys())
+                out_lines.extend(names)
+            else:
+                out_lines.append(node["name"])
+        return "\n".join(out_lines)
 
     def cmd_cd(self, args):
-        if not args:
+        """cd [путь] — переход в каталог."""
+        if len(args) > 1:
+            raise VFSException("cd: слишком много аргументов")
+        if not args or args[0] == "~":
             self.current = self.root
             return ""
         target = self._resolve(args[0])
         if target["type"] != "dir":
-            raise VFSException(f"Не директория: {args[0]}")
+            raise VFSException(f"cd: не директория: {args[0]}")
         self.current = target
         return ""
 
     def cmd_pwd(self, args):
+        """pwd — текущий путь."""
         return self.pwd()
+
+    def cmd_echo(self, args):
+        """echo аргументы... — выводит аргументы через пробел."""
+        return " ".join(args)
+
+    def cmd_cat(self, args):
+        """cat файл [файл ...] — вывод содержимого файлов."""
+        if not args:
+            raise VFSException("cat: не указан файл")
+        chunks = []
+        for path in args:
+            node = self._resolve(path)
+            if node["type"] != "file":
+                raise VFSException(f"cat: {path}: это директория")
+            chunks.append(node["content"])
+        return "\n".join(chunks)
+
+    def cmd_tail(self, args):
+        """tail [-n N] файл — последние N строк (по умолчанию 10)."""
+        n = 10
+        if not args:
+            raise VFSException("tail: не указан файл")
+        if args[0] == "-n":
+            if len(args) < 3:
+                raise VFSException("tail: -n требует число и файл")
+            try:
+                n = int(args[1])
+            except ValueError:
+                raise VFSException(f"tail: неверное число: {args[1]}")
+            args = args[2:]
+        if not args:
+            raise VFSException("tail: не указан файл")
+        node = self._resolve(args[0])
+        if node["type"] != "file":
+            raise VFSException(f"tail: {args[0]}: это директория")
+        lines = node["content"].splitlines()
+        return "\n".join(lines[-n:]) if lines else ""
 
     def cmd_exit(self, args):
         raise SystemExit(0)
