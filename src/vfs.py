@@ -150,6 +150,69 @@ class VFS:
         lines = node["content"].splitlines()
         return "\n".join(lines[-n:]) if lines else ""
 
+    def cmd_mkdir(self, args):
+        """mkdir путь - создать каталог."""
+        if not args:
+            raise VFSException("mkdir: не указано имя каталога")
+        if len(args) > 1:
+            raise VFSException("mkdir: слишком много аргументов")
+
+        path = args[0]
+        if "/" in path:
+            parent_path, name = path.rsplit("/", 1)
+            if parent_path == "":
+                parent_path = "/"
+            parent = self._resolve(parent_path)
+        else:
+            parent = self.current
+            name = path
+
+        if name in ("", ".", ".."):
+            raise VFSException(f"mkdir: неверное имя: {path}")
+        if parent["type"] != "dir":
+            raise VFSException(f"mkdir: {path}: не директория")
+        if name in parent["children"]:
+            raise VFSException(f"mkdir: {path}: уже существует")
+
+        new_dir = {"type": "dir", "name": name,
+                   "parent": parent, "children": {}}
+        parent["children"][name] = new_dir
+        return ""
+
+    def cmd_mv(self, args):
+        """mv что куда — переместить или переименовать."""
+        if len(args) < 2:
+            raise VFSException("mv: нужно два аргумента: что и куда")
+
+        src_path, dst_path = args[0], args[1]
+        src = self._resolve(src_path)
+
+        if "/" in dst_path:
+            parent_path, name = dst_path.rsplit("/", 1)
+            if parent_path == "":
+                parent_path = "/"
+            dst_parent = self._resolve(parent_path)
+        else:
+            dst_parent = self.current
+            name = dst_path
+
+        if dst_parent["type"] != "dir":
+            raise VFSException(f"mv: {dst_path}: не директория")
+        if name in ("", ".", ".."):
+            raise VFSException(f"mv: неверное имя: {dst_path}")
+        if name in dst_parent["children"]:
+            raise VFSException(f"mv: {dst_path}: уже существует")
+        if src is self.root:
+            raise VFSException("mv: нельзя переместить корень")
+
+        old_parent = src["parent"]
+        if old_parent is not None:
+            del old_parent["children"][src["name"]]
+        src["name"] = name
+        src["parent"] = dst_parent
+        dst_parent["children"][name] = src
+        return ""
+
     def cmd_exit(self, args):
         raise SystemExit(0)
 

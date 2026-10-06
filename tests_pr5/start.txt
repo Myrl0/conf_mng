@@ -1,0 +1,31 @@
+# --- mkdir ---
+ls
+mkdir newdir
+ls
+mkdir newdir2
+mkdir newdir2
+cd newdir
+mkdir inner
+ls
+cd ..
+mkdir docs/sub
+ls docs
+
+# --- mv: переименование файла ---
+mv readme.txt readme_new.txt
+ls
+cat readme_new.txt
+
+# --- mv: перемещение в каталог ---
+mv readme_new.txt newdir
+ls newdir
+
+# --- mv: переименование каталога ---
+mv newdir newdir_renamed
+ls
+
+# --- mv: вложенный путь ---
+mv newdir_renamed/inner docs/inner_moved
+ls docs
+
+exit

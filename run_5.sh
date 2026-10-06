@@ -1,0 +1,1 @@
+python3 src/pr5.py --vfs-path vfs/several.json --script tests_pr5/start.txt
