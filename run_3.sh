@@ -7,8 +7,12 @@ python3 src/pr3.py --vfs-path vfs/several.json --script tests/start_vfs_several.
 echo "////////////////////DEEPTEST//////////////////////"
 echo "////////////////////DEEPTEST//////////////////////"
 echo "////////////////////DEEPTEST//////////////////////"
-python3 src/pr3.py --vfs-path vfs/several.json --script tests/start_vfs_deep.txt
-echo "////////////////////MINIMALALTEST//////////////////////"
+python3 src/pr3.py --vfs-path vfs/deep.json --script tests/start_vfs_deep.txt
 echo "////////////////////MINIMALTEST//////////////////////"
 echo "////////////////////MINIMALTEST//////////////////////"
-python3 src/pr3.py --vfs-path vfs/several.json --script tests/start_vfs_minimal.txt
+echo "////////////////////MINIMALTEST//////////////////////"
+python3 src/pr3.py --vfs-path vfs/minimal.json --script tests/start_vfs_minimal.txt
+echo "////////////////////ERRORTEST//////////////////////"
+echo "////////////////////ERRORTEST//////////////////////"
+echo "////////////////////ERRORTEST//////////////////////"
+python3 src/pr3.py --vfs-path vfs/deep.json --script tests/start_vfs_error.txt

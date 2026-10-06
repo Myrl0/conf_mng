@@ -1,0 +1,28 @@
+ls
+ls docs empty
+ls readme.txt
+
+pwd
+cd docs
+pwd
+cd ..
+cd /docs
+pwd
+cd ../empty
+pwd
+cd /
+pwd
+
+echo Привет, VFS!
+echo несколько    слов   через пробелы
+
+cat readme.txt
+cat docs/guide.txt
+cat readme.txt docs/guide.txt
+cat docs/binary.dat
+
+tail readme.txt
+tail -n 1 readme.txt
+tail -n 2 readme.txt
+
+exit
